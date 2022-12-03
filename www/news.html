@@ -76,6 +76,10 @@
                      ini halaman news yang akan menampilkan data berita disini
                   </p>
                </div>
+
+               <div id="dataku"></div>
+
+
                <!--<div class="col-xl-6">
                <p>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur incidunt illum error magni reprehenderit. Minima culpa sed vitae quis. Similique hic, ad maxime assumenda sit pariatur in quidem voluptates quia.
@@ -86,6 +90,9 @@
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur incidunt illum error magni reprehenderit. Minima culpa sed vitae quis. Similique hic, ad maxime assumenda sit pariatur in quidem voluptates quia.
                </p>
             </div> -->
+
+
+
             </div>
 
          </div>
@@ -123,7 +130,27 @@
          url: `http://belajarlaravel.brainwarehub.com/api/getnewsapi`,
       })
          .then(response => {
-            console.log(response);
+            console.log(response.data);
+            console.log(response.data.length);
+            var text = "";
+            text += "<table class='table table-bordered'>";
+            text += "<tr>";
+            text += "<th>ID</th>";
+            text += "<th>Category</th>";
+            text += "<th>Title</th>";
+            text += "<th>Content</th>";
+            text += "</tr>";
+            for (let i = 0; i < response.data.length; i++) {
+               text += "<tr>";
+               text += "<td>" + response.data[i].id + "</td>";
+               text += "<td>" + response.data[i].id_category + "</td>";
+               text += "<td>" + response.data[i].tittle + "</td>";
+               text += "<td>" + response.data[i].content + "</td>";
+
+               text += + "</tr>";
+            }
+            text += "</table>";
+            document.getElementById("dataku").innerHTML = text;
          })
          .catch(function (err) {
             console.log(err);
