@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,25 +34,26 @@
       };
    </script>
 </head>
+
 <body>
    <div w3-include-html="sidebar.html"></div>
    <div w3-include-html="navbar.html"></div>
    <main class="wrapper">
 
-   <!-- ============================================================================content start==================================================================================== -->
-   <section>
-      <div class="container-fluid px-md-4">
-   
-         <!-- title pages -->
-         <header class="mb-5">
-            <h3 class="title-pages fw-bold">News</h3>
-         </header>
-   
-         <!-- mengatur kolom melalui row -->
-         <div class="row">
-   
-            <!-- sub tombol -->
-            <!-- <div class="col-12 mb-4">
+      <!-- ============================================================================content start==================================================================================== -->
+      <section>
+         <div class="container-fluid px-md-4">
+
+            <!-- title pages -->
+            <header class="mb-5">
+               <h3 class="title-pages fw-bold">News</h3>
+            </header>
+
+            <!-- mengatur kolom melalui row -->
+            <div class="row">
+
+               <!-- sub tombol -->
+               <!-- <div class="col-12 mb-4">
                <div class="row flex-nowrap g-2 g-md-3 text-nowrap">
                   <div class="col col-md-auto">
                      <a href="#" class="btn btn-outline-dark w-100">
@@ -65,16 +67,16 @@
                   </div>
                </div>
             </div> -->
-            <!-- end subtombol -->
-   
-            <div class="col-12">
-          
-               <!-- <h4 class="fw-bold">Subtitle Dashboard</h4> -->
-               <p>
-                  ini halaman news yang akan menampilkan data berita disini
-               </p>
-            </div>
-             <!--<div class="col-xl-6">
+               <!-- end subtombol -->
+
+               <div class="col-12">
+
+                  <!-- <h4 class="fw-bold">Subtitle Dashboard</h4> -->
+                  <p>
+                     ini halaman news yang akan menampilkan data berita disini
+                  </p>
+               </div>
+               <!--<div class="col-xl-6">
                <p>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur incidunt illum error magni reprehenderit. Minima culpa sed vitae quis. Similique hic, ad maxime assumenda sit pariatur in quidem voluptates quia.
                </p>
@@ -84,13 +86,13 @@
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur incidunt illum error magni reprehenderit. Minima culpa sed vitae quis. Similique hic, ad maxime assumenda sit pariatur in quidem voluptates quia.
                </p>
             </div> -->
-         </div>
-   
-      </div>
-   </section>
-   <!-- ============================================================================content end====================================================================================== -->
+            </div>
 
-   <div w3-include-html="footer.html"></div>
+         </div>
+      </section>
+      <!-- ============================================================================content end====================================================================================== -->
+
+      <div w3-include-html="footer.html"></div>
    </main>
    <div w3-include-html="navdown.html"></div>
    <script src="/ui/jquery-3.6.1/jquery-3.6.1.min.js"></script>
@@ -113,6 +115,19 @@
    <script>
       [].forEach.call(document.querySelectorAll("*"), function (a) {
       });
+   </script>
+   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+   <script>
+      axios({
+         method: 'get',
+         url: `http://belajarlaravel.brainwarehub.com/api/getnewsapi`,
+      })
+         .then(response => {
+            console.log(response);
+         })
+         .catch(function (err) {
+            console.log(err);
+         });
    </script>
 
 </body>
