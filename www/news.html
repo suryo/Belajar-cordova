@@ -56,12 +56,12 @@
 
               
 
-               <div class="col-12">
+               <div class="col-12 mb-3">
                <a href="addnews.html" class="btn btn-primary">Add News</a>
                  
                </div>
 
-               <div id="dataku"></div>
+               <div id="dataku">loading ...</div>
 
 
               
@@ -112,15 +112,18 @@
             text += "<th>Title</th>";
             text += "<th>Content</th>";
             text += "</tr>";
-            for (let i = 0; i < response.data.length; i++) {
+            if(response.data.length>0){
+               for (var i = 0; i < response.data.length; i++) {
                text += "<tr>";
                text += "<td>" + response.data[i].id + "</td>";
                text += "<td>" + response.data[i].id_category + "</td>";
                text += "<td>" + response.data[i].tittle + "</td>";
                text += "<td>" + response.data[i].content + "</td>";
 
-               text += + "</tr>";
+               text += "</tr>";
             }
+            }
+            
             text += "</table>";
             document.getElementById("dataku").innerHTML = text;
          })
