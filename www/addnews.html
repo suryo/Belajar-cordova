@@ -40,8 +40,6 @@
    <div w3-include-html="navbar.html"></div>
    <main class="wrapper">
 
-      
-
       <!-- ============================================================================content start==================================================================================== -->
       <section>
          <div class="container-fluid px-md-4">
@@ -54,17 +52,56 @@
             <!-- mengatur kolom melalui row -->
             <div class="row">
 
-              
+               
 
                <div class="col-12">
-               <a href="addnews.html" class="btn btn-primary">Add News</a>
-                 
+
+                  
+
+                   
+                                          
+                                            <div class="form-group">
+                                                <label for="category">Category</label>
+                                                <input type="text" class="form-control"
+                                                    name="id_category_product" value="">
+                
+                                             
+                                                <div class="invalid-feedback">
+                                                   
+                                                </div>
+                                             
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="product">News Title</label>
+                                                <input type="text" class="form-control"
+                                                name="title" id="title" value="">
+                
+                                            </div>
+                
+                                 
+                                            <div class="form-group mb-3">
+                                                <label for="description">News Content</label>
+                                                <textarea
+                                                    name="description" id="content"
+                                                    class="form-control"
+                                                    rows="5"
+                                                   ></textarea>
+                
+                                             
+                                                <div class="invalid-feedback">
+                                                  
+                                                </div>
+                                            
+                                            </div>
+                
+                                            <a href="news.html" class="btn btn-md btn-primary">Cancel</a>
+                                            <button type="submit" class="btn btn-md btn-primary">Save</button>
+                
+                                       
+                
                </div>
-
-               <div id="dataku"></div>
-
-
-              
+ 
             </div>
 
          </div>
