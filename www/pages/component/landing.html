@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BYTEVRZ &bull; by SuryoAtm</title>
+
+    <link rel="icon" href="../../img/logo.ico" />
+    <link rel="stylesheet" href="../../dist52/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../bootstrap-icons/bootstrap-icons.css" />
+    <link rel="stylesheet" href="../../fonts/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../fonts/line-awesome.min.css" />
+    <link rel="stylesheet" href="../../icomoon/style.css" />
+    <link rel="stylesheet" href="../../css/global.css" />
+    <link rel="stylesheet" href="../../css/navtop.css" />
+    <link rel="stylesheet" href="../../css/footer.css" />
+    <link rel="stylesheet" href="../../css/landing.css" />
+
+    <script>
+        function includeHTML() {
+           var z, i, elmnt, file, xhttp;
+           z = document.getElementsByTagName("*");
+           for (i = 0; i < z.length; i++) {
+              elmnt = z[i];
+              file = elmnt.getAttribute("w3-include-html");
+              if (file) {
+                 xhttp = new XMLHttpRequest();
+                 xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4) {
+                       if (this.status == 200) { elmnt.innerHTML = this.responseText; }
+                       if (this.status == 404) { elmnt.innerHTML = "Page not found."; }
+                       elmnt.removeAttribute("w3-include-html");
+                       includeHTML();
+                    }
+                 }
+                 xhttp.open("GET", file, true);
+                 xhttp.send();
+                 return;
+              }
+           }
+        };
+     </script>
+  </head>
+
+  <body>
+    <!-- @yield('notifikasi') -->
+     
+    <div w3-include-html="navtop.html"></div>
+    <div w3-include-html="navdown.html"></div>
+
+
+    <main class="wrapper">
+      <!-- @extends('../../layout') @section('notifikasi') -->
+      <!-- @endsection @section('konten') -->
+      <div w3-include-html="content.html"></div>
+      <!-- @endsection @section('popup') -->
+      <!-- POPUP COOKIES -->
+      <div
+        class="collapse fixed-bottom text-bg-primary show"
+        id="cookies"
+        style="z-index: 2000"
+      >
+        <div class="p-3">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col mb-3 mb-lg-0">
+                This website uses cookies to improve functionality and
+                performance. Using cookies should enable the user to use certain
+                functions, share on social networks and edit messages and
+                advertisements. By clicking on the “OK” button, you agree to the
+                use of cookies on this website. For additional information,
+                please see our Privacy Policy
+              </div>
+              <div class="col-lg-auto">
+                <button
+                  class="btn btn-outline-light"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#cookies"
+                >
+                  I'am Agree
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END OF POPUP COOKIES -->
+
+      <!-- SUBSCRIBE ON LANDING PAGE -->
+      <!-- form subscribe -->
+      <div
+        class="modal fade popup modal-middle"
+        id="formSubscribe"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        aria-hidden="true"
+        aria-labelledby="formSubscribeLabel"
+        tabindex="-1"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title opacity-25" id="formSubscribeLabel">
+                Subscribe
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="container-fluid">
+                <h1 class="gotham-bold">Hello.<br />Get 10% OFF*</h1>
+                <p class="mb-4">
+                  Your first order when you subscribe to our newsletter!
+                </p>
+                <form>
+                  <div
+                    class="form-floating border-bottom border-secondary mb-5"
+                  >
+                    <input
+                      type="email"
+                      class="form-control border-0 px-0"
+                      id="inputEmail1"
+                      placeholder="name@example.com"
+                    />
+                    <label for="inputEmail1" class="px-0">Email Address*</label>
+                  </div>
+                  <div class="text-center">
+                    <a
+                      data-bs-dismiss="modal"
+                      data-bs-toggle="modal"
+                      href="#formSignup"
+                      class="btn btn-primary w-100 mb-4 w-lg-auto"
+                    >
+                      CLAIM MY 10% OFF
+                    </a>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <p class="small">
+                Subscribe to receive communications from Supresso about our
+                products and services. By subscribing, you agree to Supresso’s
+                <a href="#" target="_blank" class="text-primary"
+                  >Privacy Policy</a
+                >
+                and
+                <a href="#" target="_blank" class="text-primary"
+                  >Terms & Conditions.</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end of form subscribe -->
+
+      <!-- FORM SIGN-UP FROM SUBSCRIBE WHEN USER DON'T HAVE ACCOUNT -->
+      <!-- form sign up -->
+    
+      <!-- end of form sign up -->
+
+      <!-- pop up confirmation sign up success -->
+     
+      <!-- end of pop up confirmation sign up success -->
+
+      <!-- FORM SIGN-UP FROM SUBSCRIBE WHEN USER ALREADY HAVE ACCOUNT -->
+      <!-- sign in to account -->
+      <div
+        class="modal fade popup modal-middle"
+        id="modalSignin"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        aria-hidden="true"
+        aria-labelledby="modalSigninLabel"
+        tabindex="-1"
+      >
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title opacity-25" id="modalSigninLabel">
+                Subscribe Success
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="container-fluid">
+                <h1 class="gotham-bold">Hello.</h1>
+                <p class="mb-5">sgi.webdev@example.com</p>
+                <p>
+                  You’re already one of us! Sign in to your account and enjoy
+                  all things #IndonesianCoffee with Supresso.
+                </p>
+                <hr class="my-4 opacity-100" />
+                <div class="text-center">
+                  <a
+                    data-bs-dismiss="modal"
+                    class="btn btn-primary w-100 mb-4 w-lg-auto"
+                  >
+                    SIGN IN <i class="bi bi-chevron-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer"></div>
+          </div>
+        </div>
+      </div>
+      <!-- end of sign in to account -->
+      <!-- @endsection -->
+    </main>
+
+    <!-- @include('../../footer') -->
+    <div w3-include-html="landingfooter.html"></div>
+
+    
+    <!-- @yield('popup') -->
+
+    <!-- <script src="/ui/jquery-3.6.1/jquery-3.6.1.min.js"></script>
+   <script src="/ui/bootstrap-5.2.1-dist/js/bootstrap.bundle.min.js"></script> -->
+   <script>
+      includeHTML();
+   </script>
+   <script>
+      $(document).on("scroll", function () {
+         if ($(document).scrollTop() > 100) {
+            $(".navbar").addClass("border-bottom");
+         } else {
+            $(".navbar").removeClass("border-bottom");
+         }
+      });
+      $('input').hover(function () {
+         $(this).select();
+      });
+   </script>
+   <script>
+      [].forEach.call(document.querySelectorAll("*"), function (a) {
+      });
+   </script>
+
+
+    <script type="text/javascript" src="../../js/jquery-3.6.0.min.js"></script>
+    <script
+      type="text/javascript"
+      src="../../dist52/js/bootstrap.bundle.min.js"
+    ></script>
+    <script type="text/javascript" src="../../js/global.js"></script>
+    <script type="text/javascript" src="../../js/{{ $pages }}.js"></script>
+
+    <script type="text/javascript">
+      [].forEach.call(document.querySelectorAll("*"), function (a) {
+        // a.style.outline = "1px solid green";
+      });
+    </script>
+  </body>
+</html>

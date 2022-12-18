@@ -1,0 +1,62 @@
+/* main.wrapper {
+	color: rgba(0, 0, 0, .5);
+} */
+
+
+/* foto detail produk coffee */
+
+#fotoDetailCoffee .carousel-indicators {
+	position: relative;
+	margin: 0 auto;
+	max-width: 480px;
+}
+
+#fotoDetailCoffee .carousel-indicators [data-bs-target] {
+	width: auto;
+	height: auto;
+	border-width: 0;
+	text-indent: initial;
+	background-color: #f1f2f2;
+	margin: 0 .5rem;
+}
+
+@media (min-width: 992px) {
+	#fotoDetailCoffee .carousel-indicators {
+		position: absolute;
+		top: .25rem;
+		right: initial;
+		bottom: initial;
+		left: 0;
+		flex-direction: column;
+		max-width: 15%;
+	}
+
+	#fotoDetailCoffee .carousel-indicators [data-bs-target] {
+		margin: .25rem .5rem;
+	}
+}
+
+
+/* spesifikasi produk */
+
+.spesifikasi-produk {
+	text-transform: capitalize;
+}
+
+.spesifikasi-produk h1,
+.spesifikasi-produk h2,
+.spesifikasi-produk h3,
+.spesifikasi-produk h4,
+.spesifikasi-produk h5,
+.spesifikasi-produk p,
+.spesifikasi-produk a {
+	line-height: normal;
+	margin-bottom: 1rem;
+}
+
+
+/* how to serve media */
+
+.media .media-header {
+	max-width: 25px;
+}

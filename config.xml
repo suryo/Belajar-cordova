@@ -8,4 +8,7 @@
     <content src="layout.html" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
+    <access origin="*" />
+    <allow-navigation href="component/dashboard.html" />
+    <allow-navigation href="https://*/*" />
 </widget>

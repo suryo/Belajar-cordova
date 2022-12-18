@@ -1,0 +1,16 @@
+footer {
+	color: #878787;
+}
+
+footer a {
+	color: #656565;
+}
+
+footer a:hover,
+footer a.active {
+	color: #323232;
+}
+
+footer a.active {
+	font-weight: bold;
+}

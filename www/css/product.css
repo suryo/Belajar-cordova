@@ -1,0 +1,19 @@
+/*custom navbar position*/
+
+#navtop {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1030;
+	width: 100%;
+}
+
+.header-product {
+	padding-top: 97px;
+}
+
+@media (min-width: 992px) {
+	.header-product {
+		padding-top: 192px;
+	}
+}
