@@ -39,38 +39,19 @@
    <div w3-include-html="sidebar.html"></div>
    <div w3-include-html="navbar.html"></div>
    <main class="wrapper">
-
-      
-
-      <!-- ============================================================================content start==================================================================================== -->
       <section>
          <div class="container-fluid px-md-4">
-
-            <!-- title pages -->
             <header class="mb-5">
                <h3 class="title-pages fw-bold">News</h3>
             </header>
-
-            <!-- mengatur kolom melalui row -->
             <div class="row">
-
-              
-
                <div class="col-12 mb-3">
-               <a href="addnews.html" class="btn btn-primary">Add News</a>
-                 
+                  <a href="addnews.html" class="btn btn-primary">Add News</a>
                </div>
-
                <div id="dataku">loading ...</div>
-
-
-              
             </div>
-
          </div>
       </section>
-      <!-- ============================================================================content end====================================================================================== -->
-
       <div w3-include-html="footer.html"></div>
    </main>
    <div w3-include-html="navdown.html"></div>
@@ -97,41 +78,49 @@
    </script>
    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
    <script>
-      axios({
-         method: 'get',
-         url: `http://belajarlaravel.brainwarehub.com/public/api/getnewsapi`,
-      })
-         .then(response => {
-            console.log(response.data);
-            console.log(response.data.length);
-            var text = "";
-            text += "<table class='table table-bordered'>";
-            text += "<tr>";
-            text += "<th>ID</th>";
-            text += "<th>Category</th>";
-            text += "<th>Title</th>";
-            text += "<th>Content</th>";
-            text += "</tr>";
-            if(response.data.length>0){
-               for (var i = 0; i < response.data.length; i++) {
-               text += "<tr>";
-               text += "<td>" + response.data[i].id + "</td>";
-               text += "<td>" + response.data[i].id_category + "</td>";
-               text += "<td>" + response.data[i].tittle + "</td>";
-               text += "<td>" + response.data[i].content + "</td>";
+      $(document).ready(function () {
+         console.log("ready!");
+      });
+      window.onload = (event) => {
+         console.log("page is fully loaded");
+         getnews();
+      };
 
-               text += "</tr>";
-            }
-            }
-            
-            text += "</table>";
-            document.getElementById("dataku").innerHTML = text;
+      function getnews() {
+         axios({
+            method: 'get',
+            url: `http://belajarlaravel.brainwarehub.com/public/api/getnewsapi`,
          })
-         .catch(function (err) {
-            console.log(err);
-         });
-   </script>
+            .then(response => {
+               console.log(response.data);
+               console.log(response.data.length);
+               var text = "";
+               text += "<table class='table table-bordered'>";
+               text += "<tr>";
+               text += "<th>ID</th>";
+               text += "<th>Category</th>";
+               text += "<th>Title</th>";
+               text += "<th>Content</th>";
+               text += "</tr>";
+               if (response.data.length > 0) {
+                  for (var i = 0; i < response.data.length; i++) {
+                     text += "<tr>";
+                     text += "<td>" + response.data[i].id + "</td>";
+                     text += "<td>" + response.data[i].id_category + "</td>";
+                     text += "<td>" + response.data[i].tittle + "</td>";
+                     text += "<td>" + response.data[i].content + "</td>";
 
+                     text += "</tr>";
+                  }
+               }
+               text += "</table>";
+               document.getElementById("dataku").innerHTML = text;
+            })
+            .catch(function (err) {
+               console.log(err);
+            });
+      }
+   </script>
 </body>
 
 </html>
