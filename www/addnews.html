@@ -39,74 +39,44 @@
    <div w3-include-html="sidebar.html"></div>
    <div w3-include-html="navbar.html"></div>
    <main class="wrapper">
-
-      <!-- ============================================================================content start==================================================================================== -->
       <section>
          <div class="container-fluid px-md-4">
-
-            <!-- title pages -->
             <header class="mb-5">
                <h3 class="title-pages fw-bold">News</h3>
             </header>
-
-            <!-- mengatur kolom melalui row -->
             <div class="row">
-
-               
-
                <div class="col-12">
+                  <div class="form-group">
+                     <label for="category">Category</label>
+                     <input type="text" class="form-control" name="id_category_product" id="id_category_product"
+                        value="">
+                     <div class="invalid-feedback">
 
-                  
+                     </div>
+                  </div>
 
-                   
-                                          
-                                            <div class="form-group">
-                                                <label for="category">Category</label>
-                                                <input type="text" class="form-control"
-                                                    name="id_category_product" value="">
-                
-                                             
-                                                <div class="invalid-feedback">
-                                                   
-                                                </div>
-                                             
-                                            </div>
+                  <div class="form-group">
+                     <label for="product">News Title</label>
+                     <input type="text" class="form-control" name="title" id="title" value="">
+                  </div>
 
-                                            <div class="form-group">
-                                                <label for="product">News Title</label>
-                                                <input type="text" class="form-control"
-                                                name="title" id="title" value="">
-                
-                                            </div>
-                
-                                 
-                                            <div class="form-group mb-3">
-                                                <label for="description">News Content</label>
-                                                <textarea
-                                                    name="description" id="content"
-                                                    class="form-control"
-                                                    rows="5"
-                                                   ></textarea>
-                
-                                             
-                                                <div class="invalid-feedback">
-                                                  
-                                                </div>
-                                            
-                                            </div>
-                
-                                            <a href="news.html" class="btn btn-md btn-primary">Cancel</a>
-                                            <button type="submit" class="btn btn-md btn-primary">Save</button>
-                
-                                       
-                
+
+                  <div class="form-group mb-3">
+                     <label for="description">News Content</label>
+                     <textarea name="description" id="content" class="form-control" rows="5"></textarea>
+                     <div class="invalid-feedback">
+                     </div>
+                  </div>
+
+                  <a href="news.html" class="btn btn-md btn-primary">Cancel</a>
+                  <button type="submit" class="btn btn-md btn-primary" onclick="postnewsapi()">Save</button>
+                  <div id="message">
+                  </div>
+
                </div>
- 
             </div>
-
          </div>
       </section>
-      <!-- ============================================================================content end====================================================================================== -->
 
       <div w3-include-html="footer.html"></div>
    </main>
@@ -134,36 +104,28 @@
    </script>
    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
    <script>
-      axios({
-         method: 'get',
-         url: `http://belajarlaravel.brainwarehub.com/public/api/getnewsapi`,
-      })
-         .then(response => {
-            console.log(response.data);
-            console.log(response.data.length);
-            var text = "";
-            text += "<table class='table table-bordered'>";
-            text += "<tr>";
-            text += "<th>ID</th>";
-            text += "<th>Category</th>";
-            text += "<th>Title</th>";
-            text += "<th>Content</th>";
-            text += "</tr>";
-            for (let i = 0; i < response.data.length; i++) {
-               text += "<tr>";
-               text += "<td>" + response.data[i].id + "</td>";
-               text += "<td>" + response.data[i].id_category + "</td>";
-               text += "<td>" + response.data[i].tittle + "</td>";
-               text += "<td>" + response.data[i].content + "</td>";
+      function postnewsapi() {
+         alert("simpan news");
+         var bodyFormData = new FormData();
+         bodyFormData.append('id_category', document.getElementById('id_category_product').value)
+         bodyFormData.append('tittle', document.getElementById('title').value)
+         bodyFormData.append('content', document.getElementById('content').value)
 
-               text += + "</tr>";
-            }
-            text += "</table>";
-            document.getElementById("dataku").innerHTML = text;
+         axios({
+            method: 'post',
+            url: `http://belajarlaravel.brainwarehub.com/public/api/postnewsapi`,
+            data: bodyFormData,
+
          })
-         .catch(function (err) {
-            console.log(err);
-         });
+            .then(response => {
+
+               document.getElementById("message").innerHTML = response.data.status;
+            })
+            .catch(function (err) {
+               console.log(err);
+            });
+      }
+
    </script>
 
 </body>
