@@ -42,11 +42,12 @@
       <section>
          <div class="container-fluid px-md-4">
             <header class="mb-5">
-               <h3 class="title-pages fw-bold">News</h3>
+               <!-- <input type="hidden" class="form-control" id="id" name="id" value="{{ $findproduct->id }}" > -->
+               <h3 class="title-pages fw-bold">Category</h3>
             </header>
             <div class="row">
                <div class="col-12 mb-3">
-                  <a href="addnews.html" class="btn btn-primary">Add News</a>
+                  <a href="addcategory.html" class="btn btn-primary">Add Category</a>
                </div>
                <div id="dataku">loading ...</div>
             </div>
@@ -54,26 +55,26 @@
       </section>
       <div w3-include-html="footer.html"></div>
 
+
+      <!-- Modal -->
       <div class="modal fade" id="editmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
          <div class="modal-dialog">
             <div class="modal-content">
                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">News</h1>
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Category</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
                <div class="modal-body">
-                  <input type="hidden" id="edit-news-id"> </input>
-                  <input class="form-control" type="text" id="edit-news-tittle"></input>
-                  <input class="form-control" type="text" id="edit-news-content"></input>
+                  <input type="hidden" id="edit-category-id"> </input>
+                  <input class="form-control" type="text" id="edit-category-name"></input>
                </div>
                <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary" onclick="updateNews()">Save changes</button>
+                  <button type="button" class="btn btn-primary" onclick="updateCategory()">Save changes</button>
                </div>
             </div>
          </div>
       </div>
-
    </main>
    <div w3-include-html="navdown.html"></div>
    <script src="/ui/jquery-3.6.1/jquery-3.6.1.min.js"></script>
@@ -104,93 +105,91 @@
       });
       window.onload = (event) => {
          console.log("page is fully loaded");
-         getnews();
+         getcategory();
+         test();
       };
 
+      function test(){
+         axios({
+            method: 'get',
+            url: `https://reqres.in/api/users/2`,
+         })
+         .then(response => {
+               console.log(response);
+         })
+      }
 
-      function editnews(data){
+      function deletecategory(id){
+         console.log(id);
+         axios({
+            method: 'post',
+            url: `http://127.0.0.1:8000/api/deletecategory/${id}`,
+         })
+            .then(response => {
+               console.log(response);
+               getcategory();
+               // document.getElementById("message").innerHTML = response.data.status;
+            })
+            .catch(function (err) {
+               console.log(err);
+            });    
+      
+               
+}
+      function editcategory(data){
          var id = data.id;
-         var tittle = data.tittle;
-         var content = data.content;
-         console.log(id,tittle,content);
-         document.getElementById("edit-news-id").value = id;
-         document.getElementById("edit-news-tittle").value = tittle;
-         document.getElementById("edit-news-content").value = content;
+         var category = data.category;
+         console.log(id,category);
+         document.getElementById("edit-category-id").value = id;
+         document.getElementById("edit-category-name").value = category;
          
       }
 
-
-      function updateNews(){
-         // console.log('updateNews');
-         var id = document.getElementById("edit-news-id").value;
-         var tittle = document.getElementById("edit-news-tittle").value;
-         var content = document.getElementById("edit-news-content").value;
-         console.log(id,tittle,content);
+      function updateCategory(){
+         // console.log('updatecategory');
+         var id = document.getElementById("edit-category-id").value;
+         var category = document.getElementById("edit-category-name").value;
+         console.log(id,category);
          axios({
             method: 'post',
-            url: `http://127.0.0.1:8000/api/updatenews`,
+            url: `http://127.0.0.1:8000/api/updatecategory`,
             data: {
-               id,tittle,content
+               id,category
             }
             
          })
          .then(response => {
                console.log(response);
-               getnews();
+               getcategory();
          })
          
 
       }
 
 
-
-
-      function deletenews(id){
-         console.log(id);
-         axios({
-            method: 'post',
-            url: `http://127.0.0.1:8000/api/deletenews/${id}`,
-         })
-            .then(response => {
-               console.log(response);
-               getnews();
-               // document.getElementById("message").innerHTML = response.data.status;
-            })
-            .catch(function (err) {
-               console.log(err);
-            });  
-
-      }
-
-      function getnews() {
+      function getcategory() {
          axios({
             method: 'get',
-            url: `http://127.0.0.1:8000/api/getnews`,
+            url: `http://127.0.0.1:8000/api/getcategory`,
          })
             .then(response => {
                console.log(response.data);
                console.log(response.data.length);
-               var no = 1;
                var text = "";
                text += "<table class='table table-bordered'>";
                text += "<tr>";
-               text += "<th>No</th>";   
-               text += "<th>ID_NEWS</th>";
-               text += "<th>ID_Category</th>";
-               text += "<th>Title</th>";
-               text += "<th>Content</th>";
+               text += "<th>ID</th>";
+               text += "<th>Category</th>";
+               text += "<th>Action</th>";   
+               
                text += "</tr>";
                if (response.data.length > 0) {
                   for (var i = 0; i < response.data.length; i++) {
                      text += "<tr>";
-                     text += "<td>" + no++ + "</td>";
                      text += "<td>" + response.data[i].id + "</td>";
-                     text += "<td>" + response.data[i].id_category + "</td>";
-                     text += "<td>" + response.data[i].tittle + "</td>";
-                     text += "<td>" + response.data[i].content + "</td>";
-                     text += "<td><button data-bs-toggle='modal' data-bs-target='#editmodal' onclick='editnews("+JSON.stringify(response.data[i])+")' class='btn btn-primary'>Edit</button></td>";
-                     text += "<td><a button type='submit' class='btn btn-danger' onclick='deletenews("+response.data[i].id+")'>Delete</button></td>";
-
+                     text += "<td>" + response.data[i].category + "</td>";
+                     text += "<td><button data-bs-toggle='modal' data-bs-target='#editmodal' onclick='editcategory("+JSON.stringify(response.data[i])+")' class='btn btn-primary'>Edit</button></td>";
+                     text += "<td><a button type='submit' class='btn btn-danger' onclick='deletecategory("+response.data[i].id+")'>Delete</button></td>";
                      text += "</tr>";
                   }
                }
@@ -201,6 +200,11 @@
                console.log(err);
             });
       }
+     
+         
+
+
+   
    </script>
 </body>
 

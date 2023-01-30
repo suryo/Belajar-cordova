@@ -42,42 +42,16 @@
       <section>
          <div class="container-fluid px-md-4">
             <header class="mb-5">
-               <h3 class="title-pages fw-bold">News</h3>
+               <h3 class="title-pages fw-bold">User</h3>
             </header>
             <div class="row">
-               <div class="col-12">
-                  <div class="form-group">
-                     <label for="category">Category</label>
-                     <input type="text" class="form-control" name="id_category_product" id="id_category_product"
-                        value="">
-                     <div class="invalid-feedback">
-
-                     </div>
-                  </div>
-
-                  <div class="form-group">
-                     <label for="product">News Title</label>
-                     <input type="text" class="form-control" name="tittle" id="tittle" value="">
-                  </div>
-
-
-                  <div class="form-group mb-3">
-                     <label for="description">News Content</label>
-                     <textarea name="description" id="content" class="form-control" rows="5"></textarea>
-                     <div class="invalid-feedback">
-                     </div>
-                  </div>
-
-                  <a href="news.html" class="btn btn-md btn-primary">Cancel</a>
-                  <button type="submit" class="btn btn-md btn-primary" onclick="postnewsapi()">Save</button>
-                  <div id="message">
-                  </div>
-
+               <div class="col-12 mb-3">
+                  <a href="adduser.html" class="btn btn-primary">Add Users</a>
                </div>
+               <div id="dataku">loading ...</div>
             </div>
          </div>
       </section>
-
       <div w3-include-html="footer.html"></div>
    </main>
    <div w3-include-html="navdown.html"></div>
@@ -104,30 +78,67 @@
    </script>
    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
    <script>
-      function postnewsapi() {
-         alert("simpan news");
-         var bodyFormData = new FormData();
-         bodyFormData.append('id_category', document.getElementById('id_category_product').value)
-         bodyFormData.append('tittle', document.getElementById('tittle').value)
-         bodyFormData.append('content', document.getElementById('content').value)
+      $(document).ready(function () {
+         console.log("ready!");
+      });
+      window.onload = (event) => {
+         console.log("page is fully loaded");
+         getusers();
+      };
 
+      function deleteuserapi(id){
+         console.log(id);
          axios({
-            method: 'POST',
-            url: `http://127.0.0.1:8000/api/postnews`,
-            data: bodyFormData,
-
+            method: 'post',
+            url: `http://127.0.0.1:8000/api/deleteuser/${id}`,
          })
             .then(response => {
+               console.log(response);
+               getusers();
+               // document.getElementById("message").innerHTML = response.data.status;
+            })
+            .catch(function (err) {
+               console.log(err);
+            });    
+      
+               
+}
 
-               document.getElementById("message").innerHTML = response.data.status;
+      function getusers() {
+         axios({
+            method: 'get',
+            url: `http://127.0.0.1:8000/api/getuser`,
+         })
+            .then(response => {
+               console.log(response.data);
+               console.log(response.data.length);
+               var no = 1;
+               var text = "";
+               text += "<table class='table table-bordered'>";
+               text += "<tr>";
+               text += "<th>No</th>";
+               text += "<th>Nama</th>";
+               text += "<th>Email</th>";
+               text += "<th>Action</th>";
+               text += "</tr>";
+               if (response.data.length > 0) {
+                  for (var i = 0; i < response.data.length; i++) {
+                     text += "<tr>";
+                     text += "<td>" + no++ + "</td>";
+                     text += "<td>" + response.data[i].name + "</td>";
+                     text += "<td>" + response.data[i].email + "</td>";
+                     text += "<td><a button type='submit' class='btn btn-danger' onclick='deleteuserapi("+response.data[i].id+")'>Delete</button></td>";
+                     text += "</tr>";
+                  }
+               }
+               text += "</table>";
+               document.getElementById("dataku").innerHTML = text;
             })
             .catch(function (err) {
                console.log(err);
             });
       }
-
    </script>
-
 </body>
 
 </html>
