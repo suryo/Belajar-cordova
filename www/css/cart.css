@@ -2,12 +2,6 @@
     font-family: "Lato", sans-serif;
     color:dimgrey;
 }
-.display {
-    display:inline-block;
-}
-.dis {
-    display:block;
-}
 header {
     position: fixed;
     top: 0px;
@@ -35,82 +29,42 @@ span:hover {
 }
 section {
     margin-top:120px;
-    margin-bottom:30px;
-}
 
-
-
-.selection {
-    position:absolute;
-    top:75px;
-    left:20px;
-}
-
-.brand {
-    position:relative;
-    left:245px;
-    top:-45px;
 }
 
 figure {
     float:left;
-    margin-left:45px;
-  } 
-
- img {
- margin-left:5px;
+    text-align:center;
+    margin-left:5px;
+    margin-right:12px;
+   
 }
-
-
-@media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
-    .app {
-        background-position:left center;
-        padding:75px 0px 75px 170px;
-        margin:-90px 0px 0px -198px;
-    }
-}
-
 figcaption {
   padding:2px;
   line-height:9px;
   margin-bottom:23px;
   font-size:13px
 }
-
+img 
+{
+    margin-left:5px;
+}
 img:hover {
     opacity:0.80;
 }
 
-#btnViewCart {
+#btnCheckOut {
  
     position:relative;
-    left:260px;
-    bottom:45px; 
-}
-#cart 
-{
-    color:dimgrey;
+    left:245px;
+    bottom:40px;
 }
 #btnClearCart
 {
-    position:relative;
-    left:250px;
-    bottom:20px;
-}
-
-#brandSort
-{
-    position:relative;
-    left:80px;
-    top:-30px;
-}
-
-#priceSort
-{ 
-    transition:2s;
-    position:relative;
-    left:80px;
-    top:-30px;
+ position:relative;
+    left:150px;
+    top:15px;
+    
 }
 .cont {
     text-align:center;
@@ -119,8 +73,21 @@ img:hover {
     top:100px;
 }
 
-
+.total {
+    
+    text-align:center;
+    font-family:'Lucida Console';
+    font-size:18px;
+    color:deepskyblue;
+}
+#total {
+    color:cadetblue;
+}
+.tot {
+    display:inline;
+}
 footer{
+   
     position: fixed;
     bottom: 0px;
     width: 100%;
