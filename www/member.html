@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="icon" href="/ui/img/ikon.png">
+   <link rel="stylesheet" href="/ui/bootstrap-5.2.1-dist/css/bootstrap.min.css">
+   <link rel="stylesheet" href="/ui/bootstrap-icons-1.10.2/bootstrap-icons.css">
+   <link rel="stylesheet" href="/ui/css/global.css">
+   <script>
+      function includeHTML() {
+         var z, i, elmnt, file, xhttp;
+         z = document.getElementsByTagName("*");
+         for (i = 0; i < z.length; i++) {
+            elmnt = z[i];
+            file = elmnt.getAttribute("w3-include-html");
+            if (file) {
+               xhttp = new XMLHttpRequest();
+               xhttp.onreadystatechange = function () {
+                  if (this.readyState == 4) {
+                     if (this.status == 200) { elmnt.innerHTML = this.responseText; }
+                     if (this.status == 404) { elmnt.innerHTML = "Page not found."; }
+                     elmnt.removeAttribute("w3-include-html");
+                     includeHTML();
+                  }
+               }
+               xhttp.open("GET", file, true);
+               xhttp.send();
+               return;
+            }
+         }
+      };
+   </script>
+</head>
+
+<body>
+   <div w3-include-html="sidebar.html"></div>
+   <div w3-include-html="navbar.html"></div>
+   <main class="wrapper">
+      <section>
+         <div class="container-fluid px-md-4">
+            <header class="mb-5">
+               <h3 class="title-pages fw-bold">Member</h3>
+            </header>
+            <div class="row">
+               <div class="col-12 mb-3">
+                  <a href="addmember.html" class="btn btn-primary">Add Member</a>
+               </div>
+               <div id="dataku">loading ...</div>
+            </div>
+         </div>
+      </section>
+      <div w3-include-html="footer.html"></div>
+   </main>
+   <div w3-include-html="navdown.html"></div>
+   <script src="/ui/jquery-3.6.1/jquery-3.6.1.min.js"></script>
+   <script src="/ui/bootstrap-5.2.1-dist/js/bootstrap.bundle.min.js"></script>
+   <script>
+      includeHTML();
+   </script>
+   <script>
+      $(document).on("scroll", function () {
+         if ($(document).scrollTop() > 100) {
+            $(".navbar").addClass("border-bottom");
+         } else {
+            $(".navbar").removeClass("border-bottom");
+         }
+      });
+      $('input').hover(function () {
+         $(this).select();
+      });
+   </script>
+   <script>
+      [].forEach.call(document.querySelectorAll("*"), function (a) {
+      });
+   </script>
+   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+   <script>
+      $(document).ready(function () {
+         console.log("ready!");
+      });
+      window.onload = (event) => {
+         console.log("page is fully loaded");
+         getmember();
+      };
+
+      function getmember() {
+         axios({
+            method: 'get',
+            url: `http://127.0.0.1:8000/api/getmember`,
+         })
+            .then(response => {
+               console.log(response.data);
+               console.log(response.data.length);
+               var text = "";
+               text += "<table class='table table-bordered'>";
+               text += "<tr>";
+               text += "<th>Nama</th>";
+               text += "<th>address</th>";
+               text += "<th>Nomor Telpon</th>";
+               text += "<th>Email</th>";
+               text += "<th>Password</th>";
+               text += "<th>Action</th>";
+               text += "</tr>";
+               if (response.data.length > 0) {
+                  for (var i = 0; i < response.data.length; i++) {
+                     text += "<tr>";
+                     text += "<td>" + response.data[i].name + "</td>";
+                     text += "<td>" + response.data[i].address + "</td>";
+                     text += "<td>" + response.data[i].telp + "</td>";
+                     text += "<td>" + response.data[i].email + "</td>";
+                     text += "<td>" + response.data[i].password + "</td>";
+                     text += "<td> <button type='submit' class='btn btn-md btn-primary' onclick='editnewsapi("+response.data[i].id+")')'>Edit</button> <button type='submit' class='btn btn-md btn-primary' onclick='deletenewsapi()'>Delete</button></td>"
+
+                     text += "</tr>";
+                  }
+               }
+               text += "</table>";
+               document.getElementById("dataku").innerHTML = text;
+            })
+            .catch(function (err) {
+               console.log(err);
+            });
+      }
+      function editnewsapi(id) {
+         console.log(id);
+         var bodyFormData = new FormData();
+         bodyFormData.append('id',id)
+         bodyFormData.append('category', 'testing')
+
+         axios({
+            method: 'get',
+            url: `http://127.0.0.1:8000/api/editmember`,
+            data: bodyFormData,
+
+         })
+            .then(response => {
+
+               document.getElementById("message").innerHTML = response.data.status;
+            })
+            .catch(function (err) {
+               console.log(err);
+            });
+      }
+    function deletenewsapi() {
+         console.log(id);
+         var bodyFormData = new FormData();
+         bodyFormData.append('id',id)
+
+         axios({
+            method: 'post',
+            url: `http://127.0.0.1:8000/api/deletemember`,
+            data: bodyFormData,
+
+         })
+            .then(response => {
+
+               document.getElementById("message").innerHTML = response.data.status;
+            })
+            .catch(function (err) {
+               console.log(err);
+            });
+    }
+   
+   </script>
+</body>
+
+</html>

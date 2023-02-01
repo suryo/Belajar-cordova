@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="icon" href="/ui/img/ikon.png">
+   <link rel="stylesheet" href="/ui/bootstrap-5.2.1-dist/css/bootstrap.min.css">
+   <link rel="stylesheet" href="/ui/bootstrap-icons-1.10.2/bootstrap-icons.css">
+   <link rel="stylesheet" href="/ui/css/global.css">
+   <script>
+      function includeHTML() {
+         var z, i, elmnt, file, xhttp;
+         z = document.getElementsByTagName("*");
+         for (i = 0; i < z.length; i++) {
+            elmnt = z[i];
+            file = elmnt.getAttribute("w3-include-html");
+            if (file) {
+               xhttp = new XMLHttpRequest();
+               xhttp.onreadystatechange = function () {
+                  if (this.readyState == 4) {
+                     if (this.status == 200) { elmnt.innerHTML = this.responseText; }
+                     if (this.status == 404) { elmnt.innerHTML = "Page not found."; }
+                     elmnt.removeAttribute("w3-include-html");
+                     includeHTML();
+                  }
+               }
+               xhttp.open("GET", file, true);
+               xhttp.send();
+               return;
+            }
+         }
+      };
+   </script>
+</head>
+
+<body>
+   <div w3-include-html="sidebar.html"></div>
+   <div w3-include-html="navbar.html"></div>
+   <main class="wrapper">
+      <section>
+         <h1>Edit member</h1>
+         <div id="formupdate">Loading ....</div>
+<button class="btn btn-primary" type="submit" onclick="updateproduct()"> UPDATE</button>
+<a href="product.html" class="btn btn-primary">Cancel</a>
+    
+  </form>
+      </section>
+
+      <div w3-include-html="footer.html"></div>
+   </main>
+   <div w3-include-html="navdown.html"></div>
+   <script src="/ui/jquery-3.6.1/jquery-3.6.1.min.js"></script>
+   <script src="/ui/bootstrap-5.2.1-dist/js/bootstrap.bundle.min.js"></script>
+   <script>
+      includeHTML();
+   </script>
+   <script>
+      $(document).on("scroll", function () {
+         if ($(document).scrollTop() > 100) {
+            $(".navbar").addClass("border-bottom");
+         } else {
+            $(".navbar").removeClass("border-bottom");
+         }
+      });
+      $('input').hover(function () {
+         $(this).select();
+      });
+   </script>
+   <script>
+      [].forEach.call(document.querySelectorAll("*"), function (a) {
+      });
+   </script>
+   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+   <script>
+      function editproduct() {
+         $(document).ready(function () {
+         console.log("ready!");
+      });
+      window.onload = (event) => {
+         console.log("page is fully loaded");
+         editproduct();
+      };
+
+         axios({
+            method: 'get',
+            url: `http://127.0.0.1:8000/api/editproduct`,
+         })
+         .then(response => {
+               console.log(response.data);
+               console.log(response.data.length);
+               var text = "";
+               text += "<input name='id' class='form-control' type='hidden' value='{{$findproduct->id}}''><br>";
+               text += "<input name='id_category' class='form-control' type='text' value='{{$findproduct->id_category}}''><br>";
+               text += "<input name='product' class='form-control' type='text' value='{{$findproduct->product}}''><br>";
+               text += "<input name='description' class='form-control' type='text' value='{{$findproduct->description}}''><br>";
+               text += "<input name='price' class='form-control' type='text' value='{{$findproduct->price}}''><br>";
+               document.getElementById("formupdate").innerHTML = text;
+            })
+            .catch(function (err) {
+               console.log(err);
+            });
+      }
+      function updateproduct() {
+         alert("simpan news");
+         var bodyFormData = new FormData();
+         bodyFormData.append('id_category', document.getElementById('id_category').value)
+         bodyFormData.append('product', document.getElementById('product').value)
+         bodyFormData.append('description', document.getElementById('description').value)
+         bodyFormData.append('price', document.getElementById('price').value)
+
+         axios({
+            method: 'POST',
+            url: `http://127.0.0.1:8000/api/updateproduct`,
+            data: bodyFormData,
+
+         })
+            .then(response => {
+
+               document.getElementById("message").innerHTML = response.data.status;
+            })
+            .catch(function (err) {
+               console.log(err);
+            });
+      }
+   </script>
+
+</body>
+
+</html>

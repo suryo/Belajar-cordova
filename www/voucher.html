@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="icon" href="/ui/img/ikon.png">
+   <link rel="stylesheet" href="/ui/bootstrap-5.2.1-dist/css/bootstrap.min.css">
+   <link rel="stylesheet" href="/ui/bootstrap-icons-1.10.2/bootstrap-icons.css">
+   <link rel="stylesheet" href="/ui/css/global.css">
+   <script>
+      function includeHTML() {
+         var z, i, elmnt, file, xhttp;
+         z = document.getElementsByTagName("*");
+         for (i = 0; i < z.length; i++) {
+            elmnt = z[i];
+            file = elmnt.getAttribute("w3-include-html");
+            if (file) {
+               xhttp = new XMLHttpRequest();
+               xhttp.onreadystatechange = function () {
+                  if (this.readyState == 4) {
+                     if (this.status == 200) { elmnt.innerHTML = this.responseText; }
+                     if (this.status == 404) { elmnt.innerHTML = "Page not found."; }
+                     elmnt.removeAttribute("w3-include-html");
+                     includeHTML();
+                  }
+               }
+               xhttp.open("GET", file, true);
+               xhttp.send();
+               return;
+            }
+         }
+      };
+   </script>
+</head>
+
+<body>
+   <div w3-include-html="sidebar.html"></div>
+   <div w3-include-html="navbar.html"></div>
+   <main class="wrapper">
+      <section>
+         <div class="container-fluid px-md-4">
+            <header class="mb-5">
+               <h3 class="title-pages fw-bold">Product</h3>
+            </header>
+            <div class="row">
+               <div class="col-12 mb-3">
+                  <a href="addvoucher.html" class="btn btn-primary">Add Voucher</a>
+               </div>
+               <div id="dataku">loading ...</div>
+            </div>
+         </div>
+      </section>
+
+      <div w3-include-html="footer.html"></div>
+      <div class="modal fade" id="editmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Voucher</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+                  <input type="hidden" id="edit-voucher-id"> </input>
+                  <input class="form-control" type="text" id="edit-voucher_name"></input>
+                  <input class="form-control" type="text" id="edit-valuediskon"></input>
+                  <input class="form-control" type="text" id="edit-kodediskon"></input>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" onclick="updatevoucher()">Save changes</button>
+               </div>
+            </div>
+         </div>
+      </div>
+
+   </main>
+   <div w3-include-html="navdown.html"></div>
+   <script src="/ui/jquery-3.6.1/jquery-3.6.1.min.js"></script>
+   <script src="/ui/bootstrap-5.2.1-dist/js/bootstrap.bundle.min.js"></script>
+   <script>
+      includeHTML();
+   </script>
+   <script>
+      $(document).on("scroll", function () {
+         if ($(document).scrollTop() > 100) {
+            $(".navbar").addClass("border-bottom");
+         } else {
+            $(".navbar").removeClass("border-bottom");
+         }
+      });
+      $('input').hover(function () {
+         $(this).select();
+      });
+   </script>
+   <script>
+      [].forEach.call(document.querySelectorAll("*"), function (a) {
+      });
+   </script>
+   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+   <script>
+      $(document).ready(function () {
+         console.log("ready!");
+      });
+      window.onload = (event) => {
+         console.log("page is fully loaded");
+         getvoucher();
+      };
+
+      function editvoucherapi(data){
+         var id = data.id;
+         var voucher_name= data.voucher_name;
+         var valuediskon= data.valuediskon;
+         var kodediskon= data.kodediskon;
+         console.log(id,voucher_name,valuediskon,kodediskon);
+         document.getElementById("edit-voucher-id").value = id;
+         document.getElementById("edit-voucher_name").value = voucher_name;
+         document.getElementById("edit-valuediskon").value = valuediskon;
+         document.getElementById("edit-kodediskon").value = kodediskon;    
+      }
+      function updatevoucher(){
+         // console.log('updateNews');
+         var id = document.getElementById("edit-voucher-id").value;
+         var voucher_name = document.getElementById("edit-voucher_name").value;
+         var valuediskon = document.getElementById("edit-valuediskon").value;
+         var kodediskon= document.getElementById("edit-kodediskon").value;       
+         console.log(id,voucher_name,valuediskon,kodediskon);
+         axios({
+            method: 'post',
+            url: `http://127.0.0.1:8000/api/updatevoucher/`,
+            data: {
+               id,voucher_name,valuediskon,kodediskon
+            }
+            
+         })
+         .then(response => {
+               console.log(response);
+               getproduct();
+               alert('Data Berhasil Di Update');
+               window.location.reload();
+         })
+      }
+      function getvoucher() {
+         axios({
+            method: 'get',
+            url: `http://127.0.0.1:8000/api/getvoucher`,
+         })
+            .then(response => {
+               console.log(response.data);
+               console.log(response.data.length);
+               var text = "";
+               text += "<table class='table table-bordered'>";
+               text += "<tr>";
+               text += "<th>Nama Voucher</th>";
+               text += "<th>Value Diskon</th>";
+               text += "<th>Kode Diskon</th>";
+               text += "<th>Action</th>";
+               text += "</tr>";
+               if (response.data.length > 0) {
+                  for (var i = 0; i < response.data.length; i++) {
+                     text += "<tr>";
+                     text += "<td>" + response.data[i].voucher_name + "</td>";
+                     text += "<td>" + response.data[i].valuediskon + "</td>";
+                     text += "<td>" + response.data[i].kodediskon + "</td>";
+                     text += "<td> <button data-bs-toggle='modal' data-bs-target='#editmodal' class='btn btn-md btn-primary' onclick='editvoucherapi("+JSON.stringify(response.data[i])+")'>Edit</button> <button type='submit' class='btn btn-md btn-primary' onclick='deletevoucherapi("+ response.data[i].id +")'>Delete</button></td>"
+
+                     text += "</tr>";
+                  }
+               }
+               text += "</table>";
+               document.getElementById("dataku").innerHTML = text;
+            })
+            .catch(function (err) {
+               console.log(err);
+            });
+      }
+
+      function deletevoucherapi(id) {
+         axios.delete('http://127.0.0.1:8000/api/deletevoucher/'+ id)
+    .then(() => window.location.reload());
+      }
+   
+   </script>
+</body>
+
+</html>
